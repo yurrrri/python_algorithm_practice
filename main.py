@@ -1,11 +1,13 @@
 N = int(input())
-times = list(map(int, input().split()))
-result = 0
-sum = 0
+rope_list = []
+for i in range(N):
+  rope_list.append(int(input()))
 
-times.sort()
-for i in times:
-  sum+=i
-  result+=sum
+rope_list.sort(reverse=True) # 내림차순 정렬
+answer = rope_list[0]
 
-print(result)
+for i in range(N):
+  if answer<rope_list[i]*(i+1):
+    answer = rope_list[i]*(i+1)
+
+print(answer)
