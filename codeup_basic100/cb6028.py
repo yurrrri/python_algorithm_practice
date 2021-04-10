@@ -1,2 +1,2 @@
 a = int(input())
-print("%d" % a)
+print("%X" %a)

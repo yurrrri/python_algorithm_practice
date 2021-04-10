@@ -1,2 +1,2 @@
 a = int(input())
-print(chr(a))
+print("%x" %a)
