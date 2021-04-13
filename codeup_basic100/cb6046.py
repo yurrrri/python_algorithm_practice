@@ -1,2 +1,2 @@
 a = int(input())
-print("%x" % a)
+print(a<<1)
