@@ -1,5 +1,7 @@
-N = int(input())
-times = list(map(int, input().split()))
+import sys
+
+n = int(sys.stdin.readline())
+times = list(map(int, sys.stdin.readline().split()))
 result = 0
 sum = 0
 
