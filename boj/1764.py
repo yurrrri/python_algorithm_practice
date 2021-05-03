@@ -14,8 +14,4 @@ listen = set(listen)
 see = set(see)
 
 listensee = listen & see
-listensee = sorted(listensee)
-
-print(len(listensee))
-for i in listensee:
-  print(i)
+print(listensee)
