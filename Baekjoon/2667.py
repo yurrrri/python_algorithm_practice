@@ -17,7 +17,7 @@ def dfs(x, y):
     board[x][y] = 2 #방문처리
     num += 1
     
-    dfs(x-1, y)
+    dfs(x-1, y) #dx, dy와 반복문으로 대체 가능
     dfs(x+1, y)
     dfs(x, y-1)
     dfs(x, y+1)
@@ -30,7 +30,7 @@ temp = []
 
 for i in range(n):
   for j in range(n):
-    if dfs(i, j) == True:
+    if dfs(i, j) == True: #집 구역
       temp.append(num)
       answer += 1
       num = 0
