@@ -1,3 +1,4 @@
+#다시 풀어봐야함
 import sys
 
 n, k = map(int, sys.stdin.readline().rstrip().split())

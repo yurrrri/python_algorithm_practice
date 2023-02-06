@@ -1,12 +1,20 @@
 import sys
+from itertools import combinations
 
 n, m = map(int, sys.stdin.readline().rstrip().split()) #세로 크기 n, 가로크기 m
 board = []
 temp = [[0]*m for _ in range(n)]
-position_list = []
+array = []
 
 for _ in range(n):
   board.append(list(map(int, sys.stdin.readline().rstrip().split())))
+
+for i in range(n):
+  for j in range(m):
+    if board[i][j] == 0:
+      array.append([i, j])
+
+combi = list(combinations(array, 3)) #벽을 3개 세울 수 있는 모든 경우의수 리스트
 
 max_safe = 0 #최대값
 
@@ -45,16 +53,18 @@ def bfs(): #BFS
 
   countSafe(temp)
 
+
 a = 0
-for i in range(n): #벽 세우기
-  for j in range(m):
-      if board[i][j] == 0:
-        board[i][j] = 1
-        a += 1
-      
-      if a == 3:
-        bfs()
-        board[i][j] = 0
-        a -= 1
-      
+
+for k in combi:
+  for x, y in k:
+    board[x][y] = 1
+    
+    a += 1
+    if a == 3:
+      bfs()
+      a = 0
+      for x, y in k:
+        board[x][y] = 0    
+                                              
 print(max_safe)
