@@ -16,7 +16,7 @@ def bfs(x, y):
 
     if abs(a-fes_pos[0])+abs(b-fes_pos[1]) <= 1000:
       print("happy")
-      return
+      return #여기서 break를 쓰면 안되는 이유는 while만 벗어나기 떄문에 아래에 sad도 같이 출력됨
 
     for i in range(n):
       if abs(a-con_pos[i][0])+abs(b-con_pos[i][1]) <= 1000 and [con_pos[i][0], con_pos[i][1]] not in visited:
