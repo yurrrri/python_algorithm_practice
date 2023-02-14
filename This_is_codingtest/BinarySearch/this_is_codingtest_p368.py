@@ -10,3 +10,5 @@ for i in range(n):
     exit(0)
 
 print(-1)
+
+

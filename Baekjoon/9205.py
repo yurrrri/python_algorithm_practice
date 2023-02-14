@@ -1,4 +1,5 @@
-import sys
+                        
+             import sys
 from collections import deque
 
 t = int(sys.stdin.readline().rstrip())
