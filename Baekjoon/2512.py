@@ -20,10 +20,10 @@ while start<=end:
     else:
       total += i
 
-  if total <= m:
-    start = mid + 1 #상한선을 더 늘려야함
+  if total <= m: #m이하에서 생각해봐야하므로
+    start = mid + 1 #상한선을 더 늘려야함 (예산보다 작으니까)
     answer = mid
-  else: #상한선을 더 작게해보고, 최대값이 있는지 확인
+  else: #예산보다 크면 안되므로 상한선을 더 낮춤
     end = mid - 1
 
 print(answer)
