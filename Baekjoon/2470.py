@@ -22,7 +22,7 @@ while left < right: #두개가 겹치면 안되므로
         a = arr[left]
         b = arr[right]
 
-    if sum < 0: 
+    if sum < 0: #앞을 더 당겨서 0과 가깝게 함
       left += 1
     else:
       right -= 1
