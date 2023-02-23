@@ -1,18 +1,24 @@
 import sys
+import math
 
 n = int(sys.stdin.readline().rstrip())
-dp = []
+dp = [0] * 50001
 
-for _ in range(n):
-  dp.append(list(map(int, sys.stdin.readline().rstrip().split())))
+dp[1] = 1 
+dp[2] = 2
+dp[3] = 3
 
-for i in range(1, n): #두번째 줄부터 확인
-  for j in range(i+1):
-      if j == 0 :
-        dp[i][0] += dp[i-1][0] #위에서만 내려올 수 있음
-      elif j == i :
-        dp[i][j] += dp[i-1][j-1] #왼쪽 위에서만 내려올 수 있으므로 더함
-      else:
-        dp[i][j] += max(dp[i-1][j-1], dp[i-1][j]) # 두 화살표중 더 큰 경우 더하기
+if n==1 or n==2 or n==3:
+  print(dp[n])
+  exit(0)
 
-print(max(dp[n-1]))
+for i in range(4, n+1):
+  if int(math.sqrt(i)) == math.sqrt(i): #해당 수 자체가 제곱수라면 최소가 1
+    dp[i] = 1
+  else: #아니라면 n이 포함하고 있는 제곱수의 합의 조합으로 나올 수 있는지 판단
+    minValue = 1e9
+    for j in range(1, int(math.sqrt(i)) + 1):
+        minValue = min(minValue, dp[i - j**2])
+    dp[i] = minValue+1
+      
+print(dp[n])
