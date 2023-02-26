@@ -1,8 +1,11 @@
 import sys
 
 n = int(sys.stdin.readline().rstrip())
-dp = []
+t = [0]
+p = [0]
 
 for _ in range(n):
-  dp.append(list(map(int, sys.stdin.readline().rstrip().split())))
+  a, b = map(int, sys.stdin.readline().rstrip().split())
+  t.append(a)
+  p.append(b)
 
