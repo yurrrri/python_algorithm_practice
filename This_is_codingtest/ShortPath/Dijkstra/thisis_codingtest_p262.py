@@ -1,12 +1,12 @@
-import sys
+ import sys
 import heapq
 
 INF = int(1e9)
-q = []
+graph = [[] for _ in range(n+1)] #연결 정보를 나타내는 그래프
+distance = [INF] * (n+1) #거리를 나타내는 리스트
+q = [] #우선순위 큐
 
 n, m, start = map(int, sys.stdin.readline().rstrip().split())
-graph = [[] for _ in range(n+1)]
-distance = [INF] * (n+1)
 
 for _ in range(m):
   a, b, c = map(int, sys.stdin.readline().rstrip().split())
@@ -14,22 +14,20 @@ for _ in range(m):
 
 def dijkstra(start):
   distance[start] = 0
-  heapq.heappush(q, (0, start))
+  heap.heappush(q, (0, start)) #초기화
 
   while q:
-    dist, now = heapq.heappop(q)
+    dist, now = heap.heappop(q)
 
-    #이미 처리한 것으로 보고 무시
-    if distance[now] < dist:
+    if distance[now] < dist: #이미 처리된 것으로 보고 무시함
       continue
 
-    for i in graph[now]:
-      cost = dist + i[1]
-
-      if cost < distance[i[0]]:
-        distance[i[0]] = cost
-        heapq.heappush(q, (cost, i[0]))
-
+    for i in graph[now]: #현재 노드에 연결되어있는 노드 검토
+      cost = i[1] + dist 
+      if cost < distance[i[0]] #기존 distance보다 작으면
+        distance[i[0]] = cost #갱신하고
+        heapq.heappush(q, (cost, i[0])) #우선순위 큐에 비용과 해당 노드 추가
+   
 dijkstra(start)
 
 count = 0
