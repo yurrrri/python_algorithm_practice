@@ -3,10 +3,17 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
+edges = []
+
+  #이렇게 하면 행성의 개수가 10000까지이므로 메모리 초과 발생함 -> 다른 아이디어가 추가적으로 필요
+# for i in range(1, n):
+#   for j in range(i+1, n+1):
+#     min_cost = min(abs(data[i][0] - data[j][0]), abs(data[i][1]-data[j][0]), abs(data[i][2]-data[j][2]))
+#     edges.append((min_cost, i, j))
+
 x = []
 y = []
 z = []
-edges = []
 parent = [0] * n
 
 for i in range(n):
