@@ -12,4 +12,4 @@ for i in range(n):
     else:
       print(-(heapq.heappop(arr)))
   else:
-    heapq.heappush(arr, -input)
+    heapq.heappush(arr, -input) #최대 힙
