@@ -1,25 +1,53 @@
+from collections import deque
 import sys
 import heapq
+input = sys.stdin.readline
 
-start, k = map(int, sys.stdin.readline().rstrip().split())
-q = []
+n, k = map(int, input().rstrip().split())
+# visited = [False] * 100001
+
+# 1) 0-1 BFS
+# 가중치가 낮은 (0) 노드를 큐 맨 앞에 추가 (q.appendleft())
+# def bfs():
+# 	global visited
+	
+# 	q = deque([(n, 0)])
+
+# 	while q:
+# 		x, dist = q.popleft()
+
+# 		if x == k:
+# 			print(dist)
+# 			break
+
+# 		if 0<=2*x<=100_000 and not visited[2*x]:
+# 			q.appendleft((2*x, dist))
+# 			visited[2*x] = True
+
+# 		for nx in [x-1, x+1]:
+# 			if 0<=nx<=100_000 and not visited[nx]:
+# 				q.append((nx, dist+1))
+# 				visited[nx] = True
+
+# bfs()
+
+# 2) 다익스트라
 INF = int(1e9)
-distance = [INF] * (100001)
-
+distance = [INF] * 100001
 def dijkstra(start):
-  heapq.heappush(q, (0, start))
-  distance[start] = 0
+	q = []
+	heapq.heappush(q, (0, start))
+	distance[start] = 0
 
-  while q:
-    dist, n = heapq.heappop(q)
+	while q:
+		dist, now = heapq.heappop(q)
 
-    for i in [(1, n+1), (1, n-1), (0, 2*n)]: #현재 시점 기준으로 갈곳 정해서 그 노드와의 최단거리 갱신
-      if 0<=i[1]<=100000: #범위 체크
-        cost = dist + i[0]
-        if cost < distance[i[1]]:
-          distance[i[1]] = cost
-          heapq.heappush(q, (cost, i[1]))
+		for i in [(1, now+1), (1, now-1), (0, now*2)]:
+			if 0<=i[1]<=100_000:
+				cost = dist + i[0]
+				if cost < distance[i[1]]:
+					distance[i[1]] = cost
+					heapq.heappush(q, (cost, i[1]))
 
-dijkstra(start)
-
+dijkstra(n)
 print(distance[k])

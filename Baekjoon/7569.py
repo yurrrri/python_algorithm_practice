@@ -1,45 +1,57 @@
-import sys
 from collections import deque
+import sys
 
-answer = 0 #최소 일수
-m, n, h = map(int, sys.stdin.readline().rstrip().split())
-graph = []
-q = deque([])
+input = sys.stdin.readline
+m, n, h = map(int, input().rstrip().split())
+#h: 높이 (세로로 몇층 쌓이는지)
+q = deque()
 
-for i in range(h):
-  temp = []
-  for j in range(n):
-    temp.append(list(map(int, sys.stdin.readline().rstrip().split())))
-    for k in range(m):
-      if temp[j][k] == 1:
-        q.append([i, j, k])
+board = []
+for _ in range(h):
+	temp = []
+	for _ in range(n):
+		temp.append(list(map(int, input().rstrip().split())))
+	board.append(temp)
 
-  graph.append(temp)
+# 익은 토마토에서부터 시작해야하므로 익은 토마토 위치 받고 시작하기
+for k in range(h):
+	for i in range(n):
+		for j in range(m):
+			if board[k][i][j] == 1:
+				q.append((k, i, j))
 
-dx = [-1, 1, 0, 0, 0, 0]
-dy = [0, 0, 1, -1, 0, 0]
-dz = [0, 0, 0, 0, 1, -1]
+dx = [0, 0, -1, 1, 0, 0]
+dy = [0, 0, 0, 0, -1, 1]
+dz = [-1, 1, 0, 0, 0, 0]
 
-while q:
-  x, y, z = q.popleft()
+answer = []
+visited = [[[False] * m]*n for _ in range(h)]
 
-  for i in range(6):
-    nx = x+dx[i]
-    ny = y+dy[i]
-    nz = z+dz[i]
+def bfs():
+	while q:
+		z, x, y = q.popleft()
 
-    if 0<=nx<h and 0<=ny<n and 0<=nz<m and graph[nx][ny][nz] == 0:
-      q.append([nx, ny, nz])
-      graph[nx][ny][nz] = graph[x][y][z]+1 #최소 드는 시간 == 최단 경로
+		for i in range(6):
+			nx = x + dx[i]
+			ny = y + dy[i]
+			nz = z + dz[i]
 
+			if not (0<=nz<h and 0<=nx<n and 0<=ny<m):
+				continue
+			
+			if board[nz][nx][ny] == 0:
+				board[nz][nx][ny] = board[z][x][y] + 1
+				q.append((nz, nx, ny))
 
+bfs()
 answer = 0
-for i in range(h):
-  for j in range(n):
-    for k in range(m):
-      if graph[i][j][k] == 0: #다 안익음
-        print(-1)
-        exit(0) #break는 가장 인접한 반복문만 빠져나오기 때문에, 아얘 종료를 해버려야함
-      answer = max(answer, graph[i][j][k])
+
+for k in range(h):
+	for i in range(n):
+		for j in range(m):
+			if board[k][i][j] == 0: # bfs를 돌렸는데도 익지않은 토마토가 있을 경우 -> -1
+				print(-1)
+				exit(0)
+			answer = max(answer, board[k][i][j])
 
 print(answer-1)

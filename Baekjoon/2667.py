@@ -1,41 +1,39 @@
+from collections import deque
 import sys
+input = sys.stdin.readline
 
-n = int(sys.stdin.readline().rstrip())
+n = int(input().rstrip())
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+visited = [[False] * n for _ in range(n)]
 board = []
 for _ in range(n):
-  board.append(list(map(int, sys.stdin.readline().rstrip())))
-  
-answer = 0
+	board.append(list(map(int, input().rstrip())))
+
+count = 0
+house_count = 0
 
 def dfs(x, y):
-  global num
-  
-  if x<=-1 or x>=n or y<=-1 or y>=n:
-    return False
+	global house_count
+	
+	visited[x][y] = True
+	house_count += 1
 
-  if board[x][y] == 1:
-    board[x][y] = 2 #방문처리
-    num += 1
-    
-    dfs(x-1, y) #dx, dy와 반복문으로 대체 가능
-    dfs(x+1, y)
-    dfs(x, y-1)
-    dfs(x, y+1)
-    
-    return True
-  return False
+	for i in range(4):
+		nx = x + dx[i]
+		ny = y + dy[i]
+		
+		if 0<=nx<n and 0<=ny<n and not visited[nx][ny] and board[nx][ny] == 1:
+			dfs(nx, ny)
 
-num = 0
-temp = []
-
+answer = []
 for i in range(n):
-  for j in range(n):
-    if dfs(i, j) == True: #집 구역
-      temp.append(num)
-      answer += 1
-      num = 0
+	for j in range(n):
+		if board[i][j] == 1 and not visited[i][j]: #1인데 아직 방문처리가 안된 -> 구역 짓기 시작
+			house_count = 0
+			count += 1
+			dfs(i, j)
+			answer.append(house_count)
 
-print(answer)
-temp.sort()
-for i in temp:
-  print(i)
+print(count)
+print('\n'.join(list(map(str, sorted(answer)))))
