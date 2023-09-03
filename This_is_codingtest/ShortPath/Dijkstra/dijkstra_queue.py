@@ -5,7 +5,7 @@ n, m = map(int, sys.stdin.readline().rstrip().split()) #노드, 간선의 개수
 INF = 1e9 #무한 수
 start = int(sys.stdin.readline().rstrip()) #시작 노드
 graph = [[] for _ in range(n+1)] #인덱스 1부터 접근하기 위해 인덱스 n으로 끝나는 이중 리스트 만들기
-distance = [INF] * (n+1) # 최단거리 테이블
+distance = [INF] * (n+1) # 최단거리 테이블 --> 각 인덱스는 시작점에서부터 해당 인덱스 노드까지 가기까지의 최단 거리를 의미함
 
 # 모든 간선 정보를 입력받기
 for _ in range(m):
