@@ -5,7 +5,7 @@ input = sys.stdin.readline
 minheap = []
 maxheap = []
 
-def sync(arr): #최소힙과 최대힙의 원소를 동일한 상태로 유지해야함
+def sync(arr):
     while arr and not visited[arr[0][1]]:
         heapq.heappop(arr)
 

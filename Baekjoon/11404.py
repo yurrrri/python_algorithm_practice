@@ -6,10 +6,8 @@ m = int(input())
 INF = int(1e9)
 graph = [[INF] * (n+1) for _ in range(n+1)]
 
-for i in range(1, n+1): #1. 자기 자신은 0으로 초기화 (시작 도시와 도착도시가 같은 경우는 없음)
-    for j in range(1, n+1):
-          if i==j:
-              graph[i][j] = 0
+for i in range(1, n+1):
+  graph[i][i] = 0
 
 for _ in range(m):
     a, b, c = map(int, input().split())

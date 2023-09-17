@@ -1,0 +1,7 @@
+n, k = map(int, input().split()) #k: 가방의 개수
+jewels = []
+bags = []
+for _ in range(n):
+  jewels.append(list(map(int, input().split())))  # 차례대로 무게, 가격
+for _ in range(k):
+  bags.append(int(input()))  # 각 가방에 담을 수 있는 최대 무게 --> 가방에는 최대 1개의 보석만 넣을 수 있음

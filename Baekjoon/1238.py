@@ -2,41 +2,41 @@ import sys
 import heapq
 
 INF = int(1e9)
-q = []
 input = sys.stdin.readline
 
-n, m, x = map(int, input().split())
+n, m, x = map(int, input().rstrip().split())
 graph = [[] for _ in range(n+1)]
+answer = 0
 
 for _ in range(m):
-  a, b, c = map(int, input().split())
+  a, b, c = map(int, input().rstrip().split())
   graph[a].append((b,c))
 
-def dijkstra(start):
-  distance = [INF] * (n+1)
+def dijkstra(start, end):
+  global n
+  
+  q = []
+  distance = [INF] * (n+1) # start에서 인덱스 1~n까지 가기까지의 최단거리를 저장할 배열 --> 처음에는 Inf로 초기화
   distance[start] = 0
-  heapq.heappush(q, (0, start))
+  heapq.heappush(q, (0, start))  # 처음에는 힙에 시작점, 0 넣기
+  _max = 0
 
   while q:
-    dist, now = heapq.heappop(q)
+    dist, now = heapq.heappop(q)  # 현재의 거리와 노드
 
-    if distance[now] < dist:
+    if distance[now] < dist: # 현재의 거리가 꺼낸 거리보다 작다면, 넘어감
       continue
 
-    for i in graph[now]:
-      cost = i[1] + dist
-      if cost < distance[i[0]]:
-        distance[i[0]] = cost
-        heapq.heappush(q, (cost, i[0]))
+    for node, c in graph[now]:  # now 노드에 연결된 그래프 중에서 최단거리를 가지는 노드가 있는지 확인
+      cost = dist + c
+      if cost < distance[node]:
+        distance[node] = cost
+        heapq.heappush(q, (cost, node))
 
-  return distance
-
-result = 0
+  return distance[end]
 
 for i in range(1, n+1):
-  go = dijkstra(i) 
-  back = dijkstra(x)
-  #go[x] : 집에서 x로 가는길
-  #back[i] : x에서 i로 가는길
-  result = max(result, go[x] + back[i])
-print(result)
+  go = dijkstra(i, x)  # 각 학생마다 x까지 도달
+  back = dijkstra(x, i)  # x에서 자기 자신의 마을까지 가는데 도달하는 시간
+  answer = max(answer, go + back)  # 오고가는 시간을 합한것의 최대값 구하기
+print(answer)
